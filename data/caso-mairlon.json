@@ -1,0 +1,64 @@
+{
+  "caso": {
+    "nome": "Caso Mairlon (fictício, baseado em padrões reais)",
+    "ano": 2023,
+    "crime": "Roubo majorado",
+    "vítima": "Comerciante de 52 anos",
+    "suspeito": "Mairlon S., 28 anos, trabalhador autônomo"
+  },
+  "linha_do_tempo": [
+    {
+      "fase": "0-24h",
+      "data": "10/03/2023",
+      "eventos": [
+        {
+          "hora": "14h30",
+          "descricao": "Ocorrência policial registrada",
+          "detalhes": "Vítima descreve agressor como 'homem moreno, boné vermelho'"
+        },
+        {
+          "hora": "18h00",
+          "descricao": "Denúncia anônima aponta Mairlon",
+          "detalhes": "Informante diz que 'conhece o rapaz do boné'"
+        },
+        {
+          "hora": "20h00",
+          "descricao": "Reconhecimento fotográfico",
+          "detalhes": "Polícia mostra única foto de Mairlon à vítima via WhatsApp"
+        }
+      ]
+    },
+    {
+      "fase": "24h-7d",
+      "data": "11/03 a 17/03/2023",
+      "eventos": [
+        {
+          "dia": 2,
+          "descricao": "Reconhecimento pessoal",
+          "detalhes": "Vítima reconhece Mairlon em delegacia, algemado"
+        },
+        {
+          "dia": 3,
+          "descricao": "Prisão preventiva",
+          "detalhes": "MP pede e juiz decreta prisão"
+        }
+      ]
+    }
+  ],
+  "vieses_identificados": [
+    {
+      "nome": "Viés de confirmação",
+      "descricao": "Investigadores buscaram apenas provas incriminatórias",
+      "fase": "0-24h"
+    },
+    {
+      "nome": "Viés de familiaridade",
+      "descricao": "Reconhecimento por policial que já conhecia o suspeito",
+      "fase": "24h-7d"
+    }
+  ],
+  "referencias": [
+    "GARRETT, Brandon. Convicting the Innocent. 2022.",
+    "ELAAD, Eitan. Tunnel Vision and Confirmation Bias. SAGE Open, 2022."
+  ]
+}
