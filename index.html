@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tunnel Vision - Caso Mairlon | Infográfico Animado</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0f1e 0%, #1a1f2f 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            color: #e1e7f0;
+        }
+
+        .infographic-container {
+            max-width: 1300px;
+            width: 100%;
+            background: rgba(18, 25, 45, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            padding: 2.5rem;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.7), 0 0 0 2px rgba(100, 150, 255, 0.2) inset;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffb347, #ff7e5f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 10px rgba(255, 180, 70, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #9aa4bf;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .subtitle span {
+            background: #2a3440;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            color: #ffb347;
+            font-weight: 600;
+        }
+
+        /* Timeline Fases */
+        .timeline-phases {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .phase-btn {
+            flex: 1;
+            margin: 0 0.5rem;
+            background: rgba(30, 40, 60, 0.7);
+            border: 1px solid #334155;
+            border-radius: 100px;
+            padding: 1rem 0.5rem;
+            color: #b9c2d9;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .phase-btn .phase-time {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffb347;
+        }
+
+        .phase-btn .phase-desc {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .phase-btn.active {
+            background: linear-gradient(145deg, #2a3f5a, #1b2b40);
+            border-color: #ffb347;
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(255, 180, 70, 0.3);
+        }
+
+        .phase-btn.active .phase-time {
+            color: white;
+            text-shadow: 0 0 10px #ffb347;
+        }
+
+        /* Main visualization area */
+        .viz-container {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Diagrama de fluxo */
+        .flow-diagram {
+            background: rgba(10, 15, 30, 0.7);
+            border-radius: 30px;
+            padding: 2rem;
+            border: 1px solid #2e3a4e;
+            box-shadow: 0 20px 30px -10px black;
+        }
+
+        .diagram-title {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #ccd6f0;
+            border-bottom: 2px solid #2e3a4e;
+            padding-bottom: 0.8rem;
+        }
+
+        .diagram-title .title-icon {
+            font-size: 2rem;
+        }
+
+        .tunnel-viz {
+            position: relative;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Linha do tempo visual */
+        .timeline-path {
+            position: relative;
+            height: 120px;
+            margin: 2rem 0;
+        }
+
+        .path-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b4b66, #1f2a3a);
+            border-radius: 2px;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .path-progress {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ffb347, #ff7e5f);
+            border-radius: 2px;
+            transform: translateY(-50%);
+            z-index: 2;
+            width: 0%;
+            transition: width 0.6s ease;
+            box-shadow: 0 0 15px #ffb347;
+        }
+
+        .timeline-markers {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+        }
+
+        .marker {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 60px;
+            margin-left: -15px;
+        }
+
+        .marker-dot {
+            width: 16px;
+            height: 16px;
+            background: #3b4b66;
+            border: 2px solid #5e6f8a;
+            border-radius: 50%;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
+            z-index: 3;
+        }
+
+        .marker.active .marker-dot {
+            background: #ffb347;
+            border-color: #fff;
+            box-shadow: 0 0 20px #ffb347;
+            transform: scale(1.3);
+        }
+
+        .marker-label {
+            font-size: 0.7rem;
+            color: #8e9db5;
+            text-align: center;
+        }
+
+        /* Evidências / Cards interativos */
+        .evidence-panel {
+            background: rgba(10, 15, 30, 0.7);
+            border-radius: 30px;
+            padding: 2rem;
+            border: 1px solid #2e3a4e;
+            box-shadow: 0 20px 30px -10px black;
+        }
+
+        .evidence-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #ccd6f0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .evidence-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .evidence-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 4px solid;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1rem;
+            border-radius: 0 16px 16px 0;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            border-color: #4f5e7a;
+        }
+
+        .evidence-item:hover {
+            background: rgba(255, 180, 70, 0.1);
+            transform: translateX(5px);
+        }
+
+        .evidence-item.critical {
+            border-color: #ffb347;
+            background: rgba(255, 180, 70, 0.07);
+        }
+
+        .evidence-item.blind {
+            border-color: #4ade80;
+        }
+
+        .evidence-item .evidence-tag {
+            display: inline-block;
+            background: #2a3440;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-right: 0.8rem;
+            color: #b9c2d9;
+        }
+
+        .bias-meter {
+            background: #1a2332;
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .bias-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .bias-bar-bg {
+            height: 30px;
+            background: #2a344a;
+            border-radius: 30px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .bias-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ffb347, #ff7e5f);
+            border-radius: 30px;
+            transition: width 0.6s ease;
+            box-shadow: 0 0 20px #ffb347;
+        }
+
+        .bias-percent {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffb347;
+            text-align: right;
+        }
+
+        .bias-note {
+            font-size: 0.8rem;
+            color: #8e9db5;
+            margin-top: 0.8rem;
+            font-style: italic;
+        }
+
+        /* Institutional pillars */
+        .pillars {
+            display: flex;
+            justify-content: space-around;
+            margin: 2.5rem 0 1rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .pillar {
+            flex: 1;
+            min-width: 150px;
+            background: rgba(20, 28, 45, 0.8);
+            border-radius: 20px;
+            padding: 1.5rem 0.5rem;
+            text-align: center;
+            border: 1px solid #334155;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .pillar.active {
+            border-color: #ffb347;
+            box-shadow: 0 0 30px rgba(255, 180, 70, 0.3);
+            background: rgba(40, 50, 75, 0.9);
+            transform: translateY(-5px);
+        }
+
+        .pillar-icon {
+            font-size: 2.2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .pillar-name {
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            color: #e1e7f0;
+        }
+
+        .pillar-status {
+            font-size: 0.8rem;
+            color: #9aa4bf;
+        }
+
+        /* Timeline controls */
+        .timeline-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .control-btn {
+            background: #2a344a;
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid #4f5e7a;
+        }
+
+        .control-btn:hover {
+            background: #3f4d6b;
+            transform: scale(1.1);
+        }
+
+        .phase-indicator {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #ffb347;
+        }
+
+        /* Footer */
+        .footer-note {
+            margin-top: 2.5rem;
+            text-align: center;
+            color: #6f7d98;
+            font-size: 0.9rem;
+            border-top: 1px solid #253040;
+            padding-top: 1.5rem;
+        }
+
+        .footer-note a {
+            color: #ffb347;
+            text-decoration: none;
+        }
+
+        /* Animação */
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 5px #ffb347; }
+            50% { box-shadow: 0 0 25px #ffb347; }
+            100% { box-shadow: 0 0 5px #ffb347; }
+        }
+
+        .highlight {
+            animation: pulse-glow 1.5s infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .viz-container {
+                grid-template-columns: 1fr;
+            }
+            .timeline-phases {
+                flex-wrap: wrap;
+            }
+            .phase-btn {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="infographic-container">
+        <div class="header">
+            <h1>⚡ A Progressão do Tunnel Vision</h1>
+            <div class="subtitle">
+                <span>Caso Mairlon</span> Como a fixação inicial se consolidou institucionalmente
+            </div>
+        </div>
+
+        <!-- Botões das fases -->
+        <div class="timeline-phases" id="phaseButtons">
+            <button class="phase-btn active" data-phase="0">
+                <span class="phase-time">0–24h</span>
+                <span class="phase-desc">Fixação inicial</span>
+            </button>
+            <button class="phase-btn" data-phase="1">
+                <span class="phase-time">24h–7d</span>
+                <span class="phase-desc">Reforço seletivo</span>
+            </button>
+            <button class="phase-btn" data-phase="2">
+                <span class="phase-time">7d–30d</span>
+                <span class="phase-desc">Cegueira institucional</span>
+            </button>
+            <button class="phase-btn" data-phase="3">
+                <span class="phase-time">30d–condenação</span>
+                <span class="phase-desc">Consolidação</span>
+            </button>
+        </div>
+
+        <!-- Visualização principal -->
+        <div class="viz-container">
+            <!-- Diagrama fluxo -->
+            <div class="flow-diagram">
+                <div class="diagram-title">
+                    <span class="title-icon">🔄</span> 
+                    <span>Evolução do Viés</span>
+                </div>
+                <div class="tunnel-viz">
+                    <!-- Linha do tempo interativa -->
+                    <div class="timeline-path">
+                        <div class="path-line"></div>
+                        <div class="path-progress" id="pathProgress" style="width: 0%;"></div>
+                    </div>
+                    <div class="timeline-markers" id="timelineMarkers">
+                        <div class="marker" data-marker="0">
+                            <div class="marker-dot"></div>
+                            <div class="marker-label">0h</div>
+                        </div>
+                        <div class="marker" data-marker="1">
+                            <div class="marker-dot"></div>
+                            <div class="marker-label">24h</div>
+                        </div>
+                        <div class="marker" data-marker="2">
+                            <div class="marker-dot"></div>
+                            <div class="marker-label">7d</div>
+                        </div>
+                        <div class="marker" data-marker="3">
+                            <div class="marker-dot"></div>
+                            <div class="marker-label">30d</div>
+                        </div>
+                        <div class="marker" data-marker="4">
+                            <div class="marker-dot"></div>
+                            <div class="marker-label">Condenação</div>
+                        </div>
+                    </div>
+
+                    <!-- Cards animados de eventos -->
+                    <div style="margin-top: 2.5rem;" id="eventCards">
+                        <!-- Conteúdo dinâmico via js -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Painel de evidências e medidor -->
+            <div class="evidence-panel">
+                <div class="evidence-title">
+                    <span>🔬</span> Evidências e Decisões
+                </div>
+                <ul class="evidence-list" id="evidenceList">
+                    <!-- Populado por js -->
+                </ul>
+
+                <!-- Medidor de viés -->
+                <div class="bias-meter">
+                    <div class="bias-label">
+                        <span>🧠 Nível de Tunnel Vision</span>
+                        <span id="biasPercentage">0%</span>
+                    </div>
+                    <div class="bias-bar-bg">
+                        <div class="bias-bar-fill" id="biasBar" style="width: 0%;"></div>
+                    </div>
+                    <div class="bias-note" id="biasNote">
+                        Suspeito único sem descarte de alternativas
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pilares institucionais -->
+        <div class="pillars" id="pillars">
+            <div class="pillar" data-pillar="policia">
+                <div class="pillar-icon">👮</div>
+                <div class="pillar-name">Polícia</div>
+                <div class="pillar-status" id="pillarPolicia">Investigação aberta</div>
+            </div>
+            <div class="pillar" data-pillar="mp">
+                <div class="pillar-icon">⚖️</div>
+                <div class="pillar-name">Ministério Público</div>
+                <div class="pillar-status" id="pillarMP">Sem manifestação</div>
+            </div>
+            <div class="pillar" data-pillar="jud">
+                <div class="pillar-icon">🏛️</div>
+                <div class="pillar-name">Judiciário</div>
+                <div class="pillar-status" id="pillarJud">Aguardando</div>
+            </div>
+            <div class="pillar" data-pillar="pericia">
+                <div class="pillar-icon">🔬</div>
+                <div class="pillar-name">Perícia</div>
+                <div class="pillar-status" id="pillarPericia">Laudo pendente</div>
+            </div>
+        </div>
+
+        <!-- Controles de navegação -->
+        <div class="timeline-controls">
+            <button class="control-btn" id="prevPhase">←</button>
+            <span class="phase-indicator" id="phaseIndicator">Fase 1: 0–24h</span>
+            <button class="control-btn" id="nextPhase">→</button>
+        </div>
+
+        <div class="footer-note">
+            <p>Baseado no caso Mairlon (nome fictício) — demonstração de como o tunnel vision se institucionaliza. 
+            <a href="#" target="_blank">🔍 Sobre os vieses</a></p>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Dados completos das fases
+            const fases = [
+                {
+                    titulo: "0–24h: Fixação inicial",
+                    progresso: 10,
+                    viés: 15,
+                    eventos: [
+                        { icone: "🎯", texto: "Polícia identifica suspeito com base em denúncia anônima", tipo: "critical" },
+                        { icone: "📸", texto: "Reconhecimento fotográfico informal (única foto)", tipo: "critical" },
+                        { icone: "🚫", texto: "Outras linhas investigativas descartadas", tipo: "critical" }
+                    ],
+                    evidencias: [
+                        { texto: "Denúncia anônima: 'um homem de boné vermelho'", tag: "frágil", critical: true },
+                        { texto: "Reconhecimento por WhatsApp (apenas uma foto)", tag: "nulo", critical: true },
+                        { texto: "Suspeito tem passagem por furto (2018)", tag: "antecedente", critical: false }
+                    ],
+                    pillars: {
+                        policia: "Foco exclusivo em Mairlon",
+                        mp: "Não envolvido",
+                        jud: "Sem atuação",
+                        pericia: "Não acionada"
+                    },
+                    notaViés: "Hipótese única formada nas primeiras horas. Viés de confirmação incipiente."
+                },
+                {
+                    titulo: "24h–7d: Reforço seletivo",
+                    progresso: 40,
+                    viés: 45,
+                    eventos: [
+                        { icone: "🔍", texto: "Testemunha reconhece suspeito em foto (procedimento sugestivo)", tipo: "critical" },
+                        { icone: "📑", texto: "Investigadores reinterpretam álibi como 'mentira'", tipo: "critical" },
+                        { icone: "⚖️", texto: "MP requisita prisão preventiva", tipo: "institucional" }
+                    ],
+                    evidencias: [
+                        { texto: "Reconhecimento pessoal sem blinding (testemunha vê suspeito algemado)", tag: "viciado", critical: true },
+                        { texto: "Álibi: estava em casa com a mãe (não investigado)", tag: "ignorado", critical: true },
+                        { texto: "Prisão preventiva decretada", tag: "MP", critical: false }
+                    ],
+                    pillars: {
+                        policia: "Convencida da culpa",
+                        mp: "Oferece denúncia",
+                        jud: "Decreta prisão",
+                        pericia: "Laudo em andamento"
+                    },
+                    notaViés: "Evidências que contradizem a hipótese são ignoradas. Viés de confirmação em ação."
+                },
+                {
+                    titulo: "7d–30d: Cegueira institucional",
+                    progresso: 75,
+                    viés: 80,
+                    eventos: [
+                        { icone: "🧪", texto: "Laudo pericial não encontra DNA do suspeito (ignorado)", tipo: "critical" },
+                        { icone: "👥", texto: "Instituições alinhadas: 'caso sólido'", tipo: "institucional" },
+                        { icone: "📉", texto: "Defesa apresenta provas de álibi (desconsideradas)", tipo: "critical" }
+                    ],
+                    evidencias: [
+                        { texto: "Exame de DNA: amostra na cena não pertence ao suspeito", tag: "excludente", critical: true },
+                        { texto: "Promotor: 'DNA pode ser de contaminação'", tag: "reinterpretação", critical: true },
+                        { texto: "Testemunhas de defesa não ouvidas", tag: "cerceamento", critical: false }
+                    ],
+                    pillars: {
+                        policia: "Investigation tunnel",
+                        mp: "Sustenta denúncia",
+                        jud: "Recebe denúncia",
+                        pericia: "Laudo conclusivo, mas ignorado"
+                    },
+                    notaViés: "Reinterpretação hierárquica de provas exculpatórias. D=0,61 (Elaad, 2022)."
+                },
+                {
+                    titulo: "30d–condenação: Consolidação",
+                    progresso: 100,
+                    viés: 98,
+                    eventos: [
+                        { icone: "🔨", texto: "Julgamento baseado em reconhecimento viciado", tipo: "critical" },
+                        { icone: "📜", texto: "Sentença condenatória: 'conjunto probatório robusto'", tipo: "institucional" },
+                        { icone: "🔒", texto: "Pena de 12 anos", tipo: "final" }
+                    ],
+                    evidencias: [
+                        { texto: "Sentença cita apenas provas incriminatórias", tag: "seletividade", critical: true },
+                        { texto: "STJ nega HC: 'revisão de provas'", tag: "tribunal", critical: true },
+                        { texto: "Mairlon preso preventivamente há 2 anos", tag: "cumprimento", critical: false }
+                    ],
+                    pillars: {
+                        policia: "Caso encerrado",
+                        mp: "Recursos contra absolvição",
+                        jud: "Condenação confirmada",
+                        pericia: "Laudo ignorado"
+                    },
+                    notaViés: "Tunnel vision institucionalizado. Hindsight bias na revisão."
+                }
+            ];
+
+            let faseAtual = 0;
+            const totalFases = fases.length;
+
+            // Elementos DOM
+            const phaseBtns = document.querySelectorAll('.phase-btn');
+            const pathProgress = document.getElementById('pathProgress');
+            const biasBar = document.getElementById('biasBar');
+            const biasPercentage = document.getElementById('biasPercentage');
+            const biasNote = document.getElementById('biasNote');
+            const eventCards = document.getElementById('eventCards');
+            const evidenceList = document.getElementById('evidenceList');
+            const phaseIndicator = document.getElementById('phaseIndicator');
+            const pillarPolicia = document.getElementById('pillarPolicia');
+            const pillarMP = document.getElementById('pillarMP');
+            const pillarJud = document.getElementById('pillarJud');
+            const pillarPericia = document.getElementById('pillarPericia');
+            const markers = document.querySelectorAll('.marker');
+
+            // Função para atualizar tudo
+            function atualizarFase(index) {
+                const fase = fases[index];
+
+                // Atualizar botões
+                phaseBtns.forEach((btn, i) => {
+                    if (i === index) btn.classList.add('active');
+                    else btn.classList.remove('active');
+                });
+
+                // Atualizar barra de progresso
+                pathProgress.style.width = fase.progresso + '%';
+
+                // Atualizar medidor de viés
+                biasBar.style.width = fase.viés + '%';
+                biasPercentage.textContent = fase.viés + '%';
+                biasNote.textContent = fase.notaViés;
+
+                // Atualizar eventos (cards animados)
+                eventCards.innerHTML = '';
+                fase.eventos.forEach(ev => {
+                    const card = document.createElement('div');
+                    card.className = `evidence-item ${ev.tipo === 'critical' ? 'critical' : ''}`;
+                    card.innerHTML = `<span class="evidence-tag">${ev.icone}</span> ${ev.texto}`;
+                    eventCards.appendChild(card);
+                });
+
+                // Atualizar lista de evidências
+                evidenceList.innerHTML = '';
+                fase.evidencias.forEach(ev => {
+                    const li = document.createElement('li');
+                    li.className = `evidence-item ${ev.critical ? 'critical' : ''}`;
+                    li.innerHTML = `<span class="evidence-tag">${ev.tag}</span> ${ev.texto}`;
+                    evidenceList.appendChild(li);
+                });
+
+                // Atualizar pilares institucionais
+                pillarPolicia.textContent = fase.pillars.policia;
+                pillarMP.textContent = fase.pillars.mp;
+                pillarJud.textContent = fase.pillars.jud;
+                pillarPericia.textContent = fase.pillars.pericia;
+
+                // Destacar pilares (active se há envolvimento crítico)
+                document.querySelectorAll('.pillar').forEach(p => p.classList.remove('active'));
+                if (index >= 1) document.querySelector('[data-pillar="mp"]').classList.add('active');
+                if (index >= 2) document.querySelector('[data-pillar="jud"]').classList.add('active');
+                if (index >= 2) document.querySelector('[data-pillar="pericia"]').classList.add('active');
+                document.querySelector('[data-pillar="policia"]').classList.add('active');
+
+                // Atualizar marcadores da linha do tempo
+                markers.forEach((marker, i) => {
+                    if (i <= index + 1) marker.classList.add('active');
+                    else marker.classList.remove('active');
+                });
+
+                // Indicador de fase
+                phaseIndicator.textContent = `Fase ${index+1}: ${fase.titulo}`;
+            }
+
+            // Event listeners dos botões de fase
+            phaseBtns.forEach((btn, idx) => {
+                btn.addEventListener('click', () => {
+                    faseAtual = idx;
+                    atualizarFase(faseAtual);
+                });
+            });
+
+            // Controles anterior/próximo
+            document.getElementById('prevPhase').addEventListener('click', () => {
+                faseAtual = (faseAtual - 1 + totalFases) % totalFases;
+                atualizarFase(faseAtual);
+            });
+
+            document.getElementById('nextPhase').addEventListener('click', () => {
+                faseAtual = (faseAtual + 1) % totalFases;
+                atualizarFase(faseAtual);
+            });
+
+            // Inicializar
+            atualizarFase(0);
+
+            // Adicionar interatividade nos cards (highlight)
+            document.addEventListener('click', (e) => {
+                if (e.target.closest('.evidence-item')) {
+                    e.target.closest('.evidence-item').classList.toggle('highlight');
+                }
+            });
+
+            // Tooltips simples (opcional)
+        })();
+    </script>
+</body>
+</html>
